@@ -1,3 +1,8 @@
+<?php 
+        include("KetNoi.php");
+        $sql = "select * from loai";
+        $KH = $con->query($sql);
+?>
 <header class="main-header-area">
         <!-- Main Header Area Start -->
         <div class="main-header header-sticky">
@@ -16,51 +21,21 @@
                                 <li>
                                     <a href="index.php">
                                         <span class="menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang chủ</font></font></span>
+                                      
+                                    </a>
+                                   
+                                </li>
+                                <li>
+                                    <a href="shop.php">
+                                        <span class="menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm</font></font></span>
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-submenu dropdown-hover">
-                                        <li><a href="index.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang chủ - 1</font></font></a></li>
-                                        
-                                        <li><a href="index-3.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang chủ - 3</font></font></a></li>
+                                        <?php foreach($KH as $kh) 
+                                        {?>
+                                        <li><a href="shop.php?loai=<?php echo $kh['Ma_Loai']; ?>"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $kh['Ten_Loai'] ?></font></font></a></li>
+                                        <?php } ?>
                                     </ul>
-                                </li>
-                                <li>
-                                    <a class="active" href="shop.php">
-                                        <span class="menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cửa hàng</font></font></span>
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                    <div class="mega-menu dropdown-hover">
-                                        <div class="menu-colum">
-                                            <ul>
-                                                <li><span class="mega-menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cửa hàng</font></font></span></li>
-                                                <li><a class="active" href="shop.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mua sắm ở thanh bên trái</font></font></a></li>
-                                                <li><a href="shop-right-sidebar.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mua sắm ở thanh bên phải</font></font></a></li>
-                                                <li><a href="shop-list-left.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Danh sách cửa hàng Thanh bên trái</font></font></a></li>
-                                                <li><a href="shop-list-right.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Danh sách cửa hàng Thanh bên phải</font></font></a></li>
-                                                <li><a href="shop-fullwidth.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cửa hàng toàn chiều rộng</font></font></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="menu-colum">
-                                            <ul>
-                                                <li><span class="mega-menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm</font></font></span></li>
-                                                <li><a href="product-details.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm duy nhất</font></font></a></li>
-                                                <li><a href="variable-product-details.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm biến đổi</font></font></a></li>
-                                                <li><a href="external-product-details.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm bên ngoài</font></font></a></li>
-                                                <li><a href="gallery-product-details.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thư viện sản phẩm</font></font></a></li>
-                                                <li><a href="countdown-product-details.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm đếm ngược</font></font></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="menu-colum">
-                                            <ul>
-                                                <li><span class="mega-menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Người khác</font></font></span></li>
-                                                <li><a href="error-404.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lỗi 404</font></font></a></li>
-                                                <li><a href="compare.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">So sánh trang</font></font></a></li>
-                                                <li><a href="cart.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang giỏ hàng</font></font></a></li>
-                                                <li><a href="checkout.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang thanh toán</font></font></a></li>
-                                                <li><a href="wishlist.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang danh sách yêu thích</font></font></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 </li>
                                
                                 <li>

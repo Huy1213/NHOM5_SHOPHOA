@@ -29,6 +29,20 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <?php 
+        $MaHoa = "";
+        include("KetNoi.php");
+    
+        // Kiểm tra xem tham số 'loai' đã được truyền qua URL hay chưa
+        if(isset($_GET['hoa'])) {
+            $MaHoa = $_GET['hoa'];
+            $sql = "SELECT * FROM san_pham WHERE Ma_Hoa = '$MaHoa'";
+        } else {
+            $sql = "SELECT * FROM san_pham";
+        }
+    
+        $SP = $con->query($sql);
+    ?>
 
 <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.qhDXWpKopYk.L.W.O/am=wA/d=0/rs=AN8SPfq5gedF4FIOWZgYyMCNZA5tU966ig/m=el_main_css"></head>
 <body style="overflow: visible;">
@@ -60,14 +74,16 @@
     <!-- Single Product Main Area Start -->
     <div class="single-product-main-area">
         <div class="container container-default custom-area">
+        <?Php foreach($SP as $sp)
+                            { ?>
             <div class="row">
                 <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
                     <div class="product-details-img">
                         <div class="single-product-img swiper-container gallery-top popup-gallery swiper-container-initialized swiper-container-horizontal">
                             <div class="swiper-wrapper" id="swiper-wrapper-98107826f5c9e45c1" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
                                 <div class="swiper-slide swiper-slide-active" role="group" aria-label="1/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/1.jpg">
-                                        <img class="w-100" src="assets/images/product/large-size/1.jpg" alt="Sản phẩm">
+                                    <a class="w-100" href="assets/images/product/large-size/<?php echo $sp['Hinh_anh'] ?>">
+                                        <img class="w-100" src="assets/images/product/large-size/<?php echo $sp['Hinh_anh'] ?>" alt="Sản phẩm">
                                     </a>
                                 </div>
                                 <div class="swiper-slide swiper-slide-next" role="group" aria-label="2/6" style="width: 450px; margin-right: 10px;">
@@ -127,11 +143,11 @@
                 <div class="col-lg-7 col-custom">
                     <div class="product-summery position-relative">
                         <div class="product-head mb-3">
-                            <h2 class="product-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm mẫu</font></font></h2>
+                            <h2 class="product-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?Php echo $sp["Ten_Hoa"];?></font></font></h2>
                         </div>
                         <div class="price-box mb-2">
-                            <span class="regular-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$80,00</font></font></span>
-                            <span class="old-price"><del><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$90,00</font></font></del></span>
+                            <span class="regular-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$<?Php echo $sp["Don_Gia"];?></font></font></span>
+                            <span class="old-price"><del><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$100</font></font></del></span>
                         </div>
                         <div class="product-rating mb-3">
                             <i class="fa fa-star"></i>
@@ -170,6 +186,7 @@
                     </div>
                 </div>
             </div>
+        <?php } ?>
             <div class="row mt-no-text">
                 <div class="col-lg-12 col-custom">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
