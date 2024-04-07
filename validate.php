@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Kiểm tra xem có người dùng nào khớp thông tin được nhập không
     if ($user) {
         // Đăng nhập thành công, chuyển hướng đến trang adminpage.php
-        header("Location: adminpage.php");
+        header("Location: admin/adminpage.php");
         exit; // Dừng script ngay sau khi chuyển hướng
     } else {
         // Thông tin đăng nhập không đúng, hiển thị thông báo lỗi
