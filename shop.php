@@ -72,6 +72,45 @@
  
          
     ?>
+
+    <!-- Sắp xếp theo tên theo giá -->
+    <?php 
+        // Thêm biến sắp xếp vào truy vấn SQL
+        $sapxep = isset($_GET['sapxep']) ? $_GET['sapxep'] : 1;
+        // Lấy từ khóa tìm kiếm từ tham số GET
+        $keyword = isset($_GET['TimKiemHoa']) ? $_GET['TimKiemHoa'] : '';
+        $sql = "SELECT * FROM san_pham";
+        $sqlseach = "";
+        if (!empty($loai_san_pham)) {
+            $sql .= " WHERE Ma_Loai = '$loai_san_pham'";
+        }
+        if (!empty($keyword)) {
+            $sql .= " WHERE Ten_Hoa LIKE '%$keyword%'";
+        }
+        // Thay đổi truy vấn SQL dựa trên lựa chọn sắp xếp
+        $sql_order = $sql; // Sao chép truy vấn hiện tại
+        switch ($sapxep) {
+            case '1':
+                // Theo thứ tự bảng chữ cái, A-Z
+                $sql_order .= " ORDER BY Ten_Hoa ASC";
+                break;
+            case '2':
+                // Sắp xếp theo giá: thấp đến cao
+                $sql_order .= " ORDER BY Don_Gia ASC";
+                break;
+            case '3':
+                // Sắp xếp theo giá: cao xuống thấp
+                $sql_order .= " ORDER BY Don_Gia DESC";
+                break;
+        }
+        
+        $sql_order .= " LIMIT $products_per_page OFFSET $offset";
+
+        // Thực thi truy vấn SQL mới
+        $result = $con->query($sql_order);
+    ?>
+
+        
     <!-- Header Area End Here -->
     <!-- Khu vực Breadcrumb bắt đầu ở đây -->
     <div class="breadcrumbs-area position-relative">
@@ -105,17 +144,14 @@
                         <div class="shop-select">
                             <form class="d-flex flex-column w-100" action="#">
                                 <div class="form-group">
-                                    <select class="form-control nice-select w-100">
-                                        <option selected value="1">Theo thứ tự bảng chữ cái, A-Z</option>
-                                        <option value="2">Sắp xếp theo mức độ phổ biến</option>
-                                        <option value="3">Sắp xếp theo độ mới</option>
-                                        <option value="4">Sắp xếp theo giá: thấp đến cao</option>
-                                        <option value="5">Sắp xếp theo giá: cao xuống thấp</option>
-                                        <option value="6">Tên sản phẩm: Z</option>
+                                    <select class="form-control nice-select w-100 " onchange="changeSorting(this)">
+                                        <option selected value="1">Theo thứ tự bảng chữ cái, A-Z</option>                                    
+                                        <option value="2">Sắp xếp theo giá: thấp đến cao</option>
+                                        <option value="3">Sắp xếp theo giá: cao xuống thấp</option>
                                     </select>
                                 </div>
                             </form>
-                        </div>
+                        </div>                       
                     </div>
                     <!--cuối thanh công cụ cửa hàng-->
                    <!-- Shop Wrapper Start -->
@@ -215,41 +251,41 @@
                     <!-- Shop Wrapper End -->
                    <!-- Bottom Toolbar Start -->
                    <?php
-// Kiểm tra xem có sản phẩm nào được trả về từ cơ sở dữ liệu hay không
-if ($result->rowCount() > 0) {
-?>
-    <div class="row">
-        <div class="col-sm-12 col-custom">
-            <div class="toolbar-bottom">
-                <div class="pagination">
-                    <ul>
-                        <?php
-                        // Hiển thị nút "Trang trước"
-                        if ($page > 1) {
-                            echo '<li><a href="?page=' . ($page - 1) . '&loai=' . $loai_san_pham . '"> < </a></li>';
-                        }
+                    // Kiểm tra xem có sản phẩm nào được trả về từ cơ sở dữ liệu hay không
+                    if ($result->rowCount() > 0) {
+                    ?>
+                        <div class="row">
+                            <div class="col-sm-12 col-custom">
+                                <div class="toolbar-bottom">
+                                    <div class="pagination">
+                                        <ul>
+                                            <?php
+                                            // Hiển thị nút "Trang trước"
+                                            if ($page > 1) {
+                                                echo '<li><a href="?page=' . ($page - 1) . '&loai=' . $loai_san_pham . '"> < </a></li>';
+                                            }
 
-                        // Hiển thị các số trang
-                        for ($i = 1; $i <= $total_pages; $i++) {
-                            echo '<li ' . ($i == $page ? 'class="current"' : '') . '><a href="?page=' . $i . '&loai=' . $loai_san_pham . '">' . $i . '</a></li>';
-                        }
+                                            // Hiển thị các số trang
+                                            for ($i = 1; $i <= $total_pages; $i++) {
+                                                echo '<li ' . ($i == $page ? 'class="current"' : '') . '><a href="?page=' . $i . '&loai=' . $loai_san_pham . '">' . $i . '</a></li>';
+                                            }
 
-                        // Hiển thị nút "Trang tiếp theo"
-                        if ($page < $total_pages) {
-                            echo '<li class="next"><a href="?page=' . ($page + 1) . '&loai=' . $loai_san_pham . '"> > </a></li>';
-                        }                                       
-                        ?>
-                    </ul>
-                </div>
-                <p class="desc-content text-center text-sm-right mb-0">
-                    <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hiển thị <?php echo $offset + 1; ?> - <?php echo min($offset + $products_per_page, $total_row); ?> trên <?php echo $total_row; ?> kết quả</font></font>
-                </p>
-            </div>
-        </div>
-    </div>
-<?php
-}
-?>
+                                            // Hiển thị nút "Trang tiếp theo"
+                                            if ($page < $total_pages) {
+                                                echo '<li class="next"><a href="?page=' . ($page + 1) . '&loai=' . $loai_san_pham . '"> > </a></li>';
+                                            }                                       
+                                            ?>
+                                        </ul>
+                                    </div>
+                                    <p class="desc-content text-center text-sm-right mb-0">
+                                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hiển thị <?php echo $offset + 1; ?> - <?php echo min($offset + $products_per_page, $total_row); ?> trên <?php echo $total_row; ?> kết quả</font></font>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
                     <!-- Bottom Toolbar End -->
                 </div>
                 <div class="col-lg-3 col-12 col-custom">
@@ -313,16 +349,7 @@ if ($result->rowCount() > 0) {
                                 </nav>
                                 <!-- Kết thúc menu tiện ích -->
                             </div>
-                            <div class="widget-list widget-mb-1">
-                                <h3 class="widget-title">Bộ Lọc Giá</h3>
-                                <!-- Bắt đầu menu tiện ích -->
-                                <form action="#">
-                                    <div id="slider-range"></div>
-                                    <button type="submit">Lọc</button>
-                                    <input type="text" name="text" id="amount" />
-                                </form>
-                                <!-- Kết thúc menu tiện ích -->
-                            </div>
+                           
                             <div class="widget-list widget-mb-1">
                                 <h3 class="widget-title">Thể Loại</h3>
                                 <div class="sidebar-body">
@@ -584,7 +611,12 @@ if ($result->rowCount() > 0) {
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
-
+    <script>
+        function changeSorting(selectElement) {
+            var selectedValue = selectElement.value;
+            window.location.href = '?page=1&loai=<?php echo $loai_san_pham; ?>&sapxep=' + selectedValue;
+        }
+    </script>
 
 </body>
 

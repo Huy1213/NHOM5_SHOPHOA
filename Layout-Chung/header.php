@@ -132,8 +132,8 @@
                                     <a href="#"><i class="fa fa-search"></i> </a>
                                     <ul class="dropdown-sidemenu dropdown-hover-2 dropdown-search">
                                         <li>
-                                            <form action="#">
-                                                <input name="search" id="search" placeholder="Tìm kiếm" type="text">
+                                            <form action="Shop.php" method="get">
+                                                <input name="TimKiemHoa" id="search" placeholder="Tìm kiếm" type="text">
                                                 <button type="submit"><i class="fa fa-search"></i></button>
                                             </form>
                                         </li>
@@ -164,12 +164,12 @@
                     <i class="fa fa-times"></i>
                 </div>
                 <div class="off-canvas-inner">
-                    <div class="search-box-offcanvas">
-                        <form>
-                            <input type="text" placeholder="Tìm kiếm sản phẩm...">
-                            <button class="search-btn"><i class="fa fa-search"></i></button>
-                        </form>
-                    </div>
+                <div class="search-box-offcanvas">
+                    <form action="shop.php" method="get">
+                        <input type="text" name="TimKiemHoa" placeholder="Tìm kiếm sản phẩm...">
+                        <button type="submit" class="search-btn"><i class="fa fa-search"></i></button> 
+                    </form>
+                </div>
                     <!-- mobile menu start -->
                     <div class="mobile-navigation">
                         <!-- mobile menu navigation start -->
