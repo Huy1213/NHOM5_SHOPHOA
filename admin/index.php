@@ -190,11 +190,19 @@ if(isset($_GET['act']))
                     
                     break;
                     case 'del_loaihoa':
-                        if(isset($_GET['id']))
-                        {
-                            $id=$_GET['id'];
+                        // // if(isset($_GET['id']))
+                        // {
+                        //     $id=$_GET['id'];
+                        //     del_loaihoa($id);
+                        // }
+                        
+// Kiểm tra xem có hoa nào sử dụng mã loại này không
+                        if(isset($_GET['act']) && $_GET['act'] == 'del_loaihoa' && isset($_GET['id'])) {
+                            $id = $_GET['id'];
+                            // Thực hiện hàm xóa loại hoa
                             del_loaihoa($id);
                         }
+
                         $loai = getall_loaiHoa();
                        
                         include "view/loaihoa.php";

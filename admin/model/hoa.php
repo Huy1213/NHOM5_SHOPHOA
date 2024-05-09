@@ -82,8 +82,21 @@ function insert_loaihoa($tenloai)
 }
 function del_loaihoa($id){
     $conn = ketnoi();
-    $sql ="DELETE FROM loai where Ma_Loai=".$id;
-    $conn->exec($sql);
+    //$sql ="DELETE FROM loai where Ma_Loai=".$id;
+    //$conn->exec($sql);
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total_hoa FROM san_pham WHERE Ma_Loai = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($result['total_hoa'] > 0) {
+        // Nếu có hoa sử dụng mã loại này, thông báo không thể xóa
+        echo "<script>alert('Không thể xóa loại hoa này vì có hoa sử dụng mã loại này.'); window.location.href = 'index.php?act=loaihoa';</script>";
+    } else {
+        // Nếu không có hoa sử dụng mã loại này, thực hiện xóa
+        $sql ="DELETE FROM loai where Ma_Loai=".$id;
+        $conn->exec($sql);
+    }
 }
 
 function getall_hoa($key, $page, $soluongsp) {
