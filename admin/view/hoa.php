@@ -30,7 +30,7 @@
             <td> <img src="images/product/<?php echo $KQ['Hinh_anh'] ?>" alt="" width="80px"></td>
             <td><?php echo $KQ['Don_Gia'] ?></td>
             <td><?php echo $KQ['Ma_Loai'] ?></td>
-            <td><a href="index.php?act=edit&id=<?php echo $KQ['Ma_Hoa'] ?>">Sửa</a> | <a href="index.php?act=del&id=<?php echo $KQ['Ma_Hoa'] ?>">Xóa</a></td>
+            <td><a href="index.php?act=edit&id=<?php echo $KQ['Ma_Hoa'] ?>" class="btn btn-primary">Sửa</a>  <a href="index.php?act=del&id=<?php echo $KQ['Ma_Hoa'] ?>" class="btn btn-danger">Xóa</a></td>
             
 </td>
         </tr>

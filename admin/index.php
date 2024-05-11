@@ -3,6 +3,9 @@ session_start();
 ob_start();
 include "model/ketnoi.php";
 include "model/hoa.php";
+include "model/admin.php";
+include "model/donhang.php";
+include "model/khachhang.php";
 include "view/header.php";
 
 if(isset($_GET['act']))
@@ -207,6 +210,90 @@ if(isset($_GET['act']))
                        
                         include "view/loaihoa.php";
                         break;
+
+                        case 'admin':
+                            $admin=getall_admin();
+                            include "view/admin.php";
+                            break;
+                       case 'insert_admin':
+                            if(!isset($_POST['insert_admin']))
+                            {
+                                include "view/insert_admin.php";
+                        
+                            }
+                            elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                // Lấy dữ liệu từ form
+                                //$id=$_POST['id'];
+                                $username = $_POST['UserName'];
+                                $password = $_POST['Password'];
+                                insert_admin($username,$password);
+                                $admin=getall_admin();
+                                include "view/admin.php";
+                            }
+                            
+                            break;
+                            case 'edit_admin':
+                
+                                if(isset($_GET['id']))
+                                    {
+                                        $id=$_GET['id'];
+                                        $admin1=getone_admin($id);
+                                       include "view/edit_admin.php";
+                                    }
+                                if(isset($_POST['edit_admin']))
+                                    {
+                                        $id=$_POST['id'];
+                                        $username=$_POST['UserName'];
+                                        $password = $_POST['Password'];
+                                        edit_admin($id,$username,$password);
+                                        $admin=getall_admin();
+                                        include "view/admin.php";
+                                    }
+                        
+                                break;
+                                case 'del_admin':
+                                    if(isset($_GET['id']))
+                                    {
+                                        $id=$_GET['id'];
+                                        del_admin($id);
+                                    }
+                                    $admin=getall_admin();
+                                    include "view/admin.php";
+                                    break;
+                        case 'thongke':
+                            $listtk=getall_thongke();
+                            include "view/thongke/list.php";
+                            break;
+                        case 'thongke_doanhthu':
+                                $listtk=getall_thongke_doanhthu();
+                                $listtkdt = getall_thongke_doanhthu();
+                                include "view/thongke/list_doanhthu.php";
+                                break;
+                        case 'khachhang':
+                                    if(isset($_POST['keyword']))
+                                    {
+                                        $keyword=$_POST['keyword'];
+                                    }
+                                    else{
+                                        $keyword="";
+                                    }
+                                    if(!isset($_GET['page']))
+                                    {
+                                        $page = 1;
+                                    }
+                                    else
+                                    {
+                                        $page = $_GET['page'];
+                                    } 
+                                    $soluongsp = 5;
+                                    $kh = getall_KH($keyword,$page,$soluongsp);
+                                    $total_rows = countRowsInTable_KH();
+                                    $total_pages = ceil($total_rows / $soluongsp);
+                                
+                              
+                                include "view/khachhang.php";
+                                break;
+                            
         default:
             include "view/home.php";
     }

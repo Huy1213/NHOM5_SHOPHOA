@@ -13,7 +13,7 @@
         // Kiểm tra xem có người dùng nào khớp thông tin được nhập không
         if ($user) {
             // Đăng nhập thành công, chuyển hướng đến trang adminpage.php
-            header("Location: admin/index.php");
+            header("Location: index.php");
             exit; // Dừng script ngay sau khi chuyển hướng
         } else {
             // Thông tin đăng nhập không đúng, hiển thị thông báo lỗi

@@ -17,7 +17,7 @@
         <tr>
             <td><?php echo $KQ['Ma_Loai'] ?></td>
             <td><?php echo $KQ['Ten_Loai'] ?></td>
-            <td><a href="index.php?act=edit_loaihoa&id=<?php echo $KQ['Ma_Loai'] ?>">Sửa</a> | <a href="#" onclick="confirmDelete(<?php echo $KQ['Ma_Loai']; ?>)">Xóa</a></td>
+            <td><a href="index.php?act=edit_loaihoa&id=<?php echo $KQ['Ma_Loai'] ?>" class="btn btn-primary">Sửa</a>  <a href="#" onclick="confirmDelete(<?php echo $KQ['Ma_Loai']; ?>)" class="btn btn-danger">Xóa</a></td>
            
         </tr>
         <?php 
