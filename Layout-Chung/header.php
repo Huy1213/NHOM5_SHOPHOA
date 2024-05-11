@@ -68,9 +68,13 @@
                         <div class="header-right-area main-nav">
                             <ul class="nav">
                                 <li class="minicart-wrap">
-                                    <a href="#" class="minicart-btn toolbar-btn">
+                                    <a href="cart.php" class="minicart-btn toolbar-btn">
                                         <i class="fa fa-shopping-cart"></i>
-                                        <span class="cart-item_count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">3</font></font></span>
+                                        <span class="cart-item_count"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                        <?php
+                                            echo(isset($_SESSION['cart_items'])&& count($_SESSION['cart_items'])) > 0?count($_SESSION['cart_items']):'';
+                                            ?>
+                                            </font></font></span>
                                     </a>
                                     <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
                                         <div class="single-cart-item">

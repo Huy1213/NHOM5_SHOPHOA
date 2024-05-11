@@ -32,15 +32,14 @@
     <?php 
         $MaHoa = "";
         include("KetNoi.php");
-    
         // Kiểm tra xem tham số 'loai' đã được truyền qua URL hay chưa
         if(isset($_GET['hoa'])) {
             $MaHoa = $_GET['hoa'];
             $sql = "SELECT * FROM san_pham WHERE Ma_Hoa = '$MaHoa'";
+            $_SESSION["ma1"] = $MaHoa; 
         } else {
             $sql = "SELECT * FROM san_pham";
         }
-    
         $SP = $con->query($sql);
     ?>
 
@@ -51,6 +50,7 @@
 
     <!-- Header Area Start Here -->
     <?php 
+
         require "Layout-Chung/header.php";
     ?>
     <!-- Header Area End Here -->
@@ -76,117 +76,126 @@
         <div class="container container-default custom-area">
         <?Php foreach($SP as $sp)
                             { ?>
-            <div class="row">
-                <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
-                    <div class="product-details-img">
-                        <div class="single-product-img swiper-container gallery-top popup-gallery swiper-container-initialized swiper-container-horizontal">
-                            <div class="swiper-wrapper" id="swiper-wrapper-98107826f5c9e45c1" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                                <div class="swiper-slide swiper-slide-active" role="group" aria-label="1/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/<?php echo $sp['Hinh_anh'] ?>">
-                                        <img class="w-100" src="assets/images/product/large-size/<?php echo $sp['Hinh_anh'] ?>" alt="Sản phẩm">
-                                    </a>
+            <form action="cart.php" method="post">
+                <div class="row">
+                    <div class="col-lg-5 offset-lg-0 col-md-8 offset-md-2 col-custom">
+                        <div class="product-details-img">
+                            <div class="single-product-img swiper-container gallery-top popup-gallery swiper-container-initialized swiper-container-horizontal">
+                                <div class="swiper-wrapper" id="swiper-wrapper-98107826f5c9e45c1" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
+                                    <div class="swiper-slide swiper-slide-active" role="group" aria-label="1/6" style="width: 450px; margin-right: 10px;">
+                                        <a class="w-100" href="assets/images/product/large-size/<?php echo $sp['Hinh_anh'] ?>">
+                                            <img class="w-100" name="hinhAnh" src="assets/images/product/large-size/<?php echo $sp['Hinh_anh'] ?>" alt="Sản phẩm">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="2/6" style="width: 450px; margin-right: 10px;">
+                                        <a class="w-100" href="assets/images/product/large-size/2.jpg">
+                                            <img class="w-100" src="assets/images/product/large-size/2.jpg" alt="Sản phẩm">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="3/6" style="width: 450px; margin-right: 10px;">
+                                        <a class="w-100" href="assets/images/product/large-size/3.jpg">
+                                            <img class="w-100" src="assets/images/product/large-size/3.jpg" alt="Sản phẩm">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="4/6" style="width: 450px; margin-right: 10px;">
+                                        <a class="w-100" href="assets/images/product/large-size/4.jpg">
+                                            <img class="w-100" src="assets/images/product/large-size/4.jpg" alt="Sản phẩm">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="5/6" style="width: 450px; margin-right: 10px;">
+                                        <a class="w-100" href="assets/images/product/large-size/5.jpg">
+                                            <img class="w-100" src="assets/images/product/large-size/5.jpg" alt="Sản phẩm">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="6/6" style="width: 450px; margin-right: 10px;">
+                                        <a class="w-100" href="assets/images/product/large-size/6.jpg">
+                                            <img class="w-100" src="assets/images/product/large-size/6.jpg" alt="Sản phẩm">
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="swiper-slide swiper-slide-next" role="group" aria-label="2/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/2.jpg">
-                                        <img class="w-100" src="assets/images/product/large-size/2.jpg" alt="Sản phẩm">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" role="group" aria-label="3/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/3.jpg">
-                                        <img class="w-100" src="assets/images/product/large-size/3.jpg" alt="Sản phẩm">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" role="group" aria-label="4/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/4.jpg">
-                                        <img class="w-100" src="assets/images/product/large-size/4.jpg" alt="Sản phẩm">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" role="group" aria-label="5/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/5.jpg">
-                                        <img class="w-100" src="assets/images/product/large-size/5.jpg" alt="Sản phẩm">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" role="group" aria-label="6/6" style="width: 450px; margin-right: 10px;">
-                                    <a class="w-100" href="assets/images/product/large-size/6.jpg">
-                                        <img class="w-100" src="assets/images/product/large-size/6.jpg" alt="Sản phẩm">
-                                    </a>
-                                </div>
-                            </div>
-                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-                        <div class="single-product-thumb swiper-container gallery-thumbs swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-thumbs">
-                            <div class="swiper-wrapper" id="swiper-wrapper-ce9a3ed8bfc35cbc" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                                <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1/6" style="width: 105px; margin-right: 10px;">
-                                    <img src="assets/images/product/small-size/1.jpg" alt="Sản phẩm">
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2/6" style="width: 105px; margin-right: 10px;">
-                                    <img src="assets/images/product/small-size/2.jpg" alt="Sản phẩm">
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3/6" style="width: 105px; margin-right: 10px;">
-                                    <img src="assets/images/product/small-size/3.jpg" alt="Sản phẩm">
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible" role="group" aria-label="4/6" style="width: 105px; margin-right: 10px;">
-                                    <img src="assets/images/product/small-size/4.jpg" alt="Sản phẩm">
-                                </div>
-                                <div class="swiper-slide" role="group" aria-label="5/6" style="width: 105px; margin-right: 10px;">
-                                    <img src="assets/images/product/small-size/5.jpg" alt="Sản phẩm">
-                                </div>
-                                <div class="swiper-slide" role="group" aria-label="6/6" style="width: 105px; margin-right: 10px;">
-                                    <img src="assets/images/product/small-size/6.jpg" alt="Sản phẩm">
-                                </div>
-                            </div>
-                            <!-- Add Arrows -->
-                            <div class="swiper-button-next swiper-button-white" tabindex="0" role="button" aria-label="Trang trình bày tiếp theo" aria-controls="swiper-wrapper-98107826f5c9e45c1" aria-disabled="false"><i class="lnr lnr-arrow-right"></i></div>
-                            <div class="swiper-button-prev swiper-button-white swiper-button-disabled" tabindex="-1" role="button" aria-label="Slide trước" aria-controls="swiper-wrapper-98107826f5c9e45c1" aria-disabled="true"><i class="lnr lnr-arrow-left"></i></div>
-                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-                    </div>
-                </div>
-                <div class="col-lg-7 col-custom">
-                    <div class="product-summery position-relative">
-                        <div class="product-head mb-3">
-                            <h2 class="product-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?Php echo $sp["Ten_Hoa"];?></font></font></h2>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true">
+                                
+                            </span>
                         </div>
-                        <div class="price-box mb-2">
-                            <span class="regular-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$<?Php echo $sp["Don_Gia"];?></font></font></span>
-                            <span class="old-price"><del><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$100</font></font></del></span>
-                        </div>
-                        <div class="product-rating mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>
-                        <div class="sku mb-3">
-                            <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mã hàng: 12345</font></font></span>
-                        </div>
-                        <p class="desc-content mb-5"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tôi phải giải thích cho bạn làm thế nào tất cả những ý tưởng sai lầm về việc tố cáo niềm vui và ca ngợi nỗi đau đã ra đời và tôi sẽ cung cấp cho bạn một bản tường trình đầy đủ về hệ thống, đồng thời giải thích những lời dạy thực tế của nhà thám hiểm vĩ đại về sự thật, bậc thầy xây dựng nên hạnh phúc của con người. .</font></font></p>
-                        <div class="quantity-with_btn mb-5">
-                            <div class="quantity">
-                                <div class="cart-plus-minus">
-                                    <input class="cart-plus-minus-box" value="0" type="text">
-                                    <div class="dec qtybutton"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-</font></font></div>
-                                    <div class="inc qtybutton"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+</font></font></div>
-                                <div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div></div>
-                            </div>
-                            <div class="add-to_cart">
-                                <a class="btn product-cart button-icon flosun-button dark-btn" href="cart.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thêm vào giỏ hàng</font></font></a>
-                                <a class="btn flosun-button secondary-btn secondary-border rounded-0" href="wishlist.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thêm vào danh sách yêu thích</font></font></a>
-                            </div>
-                        </div>
-                        <div class="social-share mb-4">
-                            <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Chia sẻ :</font></font></span>
-                            <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
-                            <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
-                            <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
-                            <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
-                        </div>
-                        <div class="payment">
-                            <a href="#"><img class="border" src="assets/images/payment/payment-icon.png" alt="Sự chi trả"></a>
+                            <div class=" single-product-thumb swiper-container gallery-thumbs swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-thumbs">
+                                <div class="swiper-wrapper" id="swiper-wrapper-ce9a3ed8bfc35cbc" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1/6" style="width: 105px; margin-right: 10px;">
+                                        <img src="assets/images/product/small-size/1.jpg" alt="Sản phẩm">
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2/6" style="width: 105px; margin-right: 10px;">
+                                        <img src="assets/images/product/small-size/2.jpg" alt="Sản phẩm">
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3/6" style="width: 105px; margin-right: 10px;">
+                                        <img src="assets/images/product/small-size/3.jpg" alt="Sản phẩm">
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-visible" role="group" aria-label="4/6" style="width: 105px; margin-right: 10px;">
+                                        <img src="assets/images/product/small-size/4.jpg" alt="Sản phẩm">
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="5/6" style="width: 105px; margin-right: 10px;">
+                                        <img src="assets/images/product/small-size/5.jpg" alt="Sản phẩm">
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="6/6" style="width: 105px; margin-right: 10px;">
+                                        <img src="assets/images/product/small-size/6.jpg" alt="Sản phẩm">
+                                    </div>
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next swiper-button-white" tabindex="0" role="button" aria-label="Trang trình bày tiếp theo" aria-controls="swiper-wrapper-98107826f5c9e45c1" aria-disabled="false"><i class="lnr lnr-arrow-right"></i></div>
+                                <div class="swiper-button-prev swiper-button-white swiper-button-disabled" tabindex="-1" role="button" aria-label="Slide trước" aria-controls="swiper-wrapper-98107826f5c9e45c1" aria-disabled="true"><i class="lnr lnr-arrow-left"></i></div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="col-lg-7 col-custom">
+                        <div class="product-summery position-relative">
+                            <div class="product-head mb-3">
+                                <input type="hidden" name="Ma_Hoa" value="<?php echo $sp['Ma_Hoa']; ?>">
+                                <h2 class="product-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?Php echo $sp["Ten_Hoa"];?></font></font></h2>
+                            </div>
+                            <div class="price-box mb-2">
+                                <span class="regular-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$<?Php echo $sp["Don_Gia"];?></font></font></span>
+                                <span class="old-price"><del><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$100</font></font></del></span>
+                            </div>
+                            <div class="product-rating mb-3">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <div class="sku mb-3">
+                                <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mã hàng: 12345</font></font></span>
+                            </div>
+                            <p class="desc-content mb-5"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tôi phải giải thích cho bạn làm thế nào tất cả những ý tưởng sai lầm về việc tố cáo niềm vui và ca ngợi nỗi đau đã ra đời và tôi sẽ cung cấp cho bạn một bản tường trình đầy đủ về hệ thống, đồng thời giải thích những lời dạy thực tế của nhà thám hiểm vĩ đại về sự thật, bậc thầy xây dựng nên hạnh phúc của con người. .</font></font></p>
+                            <div class="quantity-with_btn mb-5">
+                                <div class="quantity">
+                                    <div class="cart-plus-minus">                                  
+                                        <input class="cart-plus-minus-box" name="sl" value="1" type="number">
+                                        <div class="dec qtybutton"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">-</font></font></div>
+                                        <div class="inc qtybutton"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">+</font></font></div>
+                                    <div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div></div>
+                                </div>                               
+                                <div class="add-to_cart">
+                                    <button class="btn product-cart button-icon flosun-button dark-btn" name="add_to_cart" value="add to cart" type="submit"><font style="vertical-align: inherit;" name="add_to_cart"><font style="vertical-align: inherit;">Thêm vào giỏ hàng</font></font></button>
+                                    <a class="btn flosun-button secondary-btn secondary-border rounded-0" href="wishlist.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thêm vào danh sách yêu thích</font></font></a>
+                                </div>
+                            </div>
+                            <div class="social-share mb-4">
+                                <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Chia sẻ :</font></font></span>
+                                <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
+                                <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
+                                <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
+                            </div>
+                            <div class="payment">
+                                <a href="#"><img class="border" src="assets/images/payment/payment-icon.png" alt="Sự chi trả"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>              
+            </form>
+           
         <?php } ?>
+
+
             <div class="row mt-no-text">
                 <div class="col-lg-12 col-custom">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -676,7 +685,7 @@
                                         <div class="quantity-with-btn">
                                             <div class="quantity">
                                                 <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" value="0" type="text">
+                                                    <input class="cart-plus-minus-box" name="soluong" value="0" type="text">
                                                     <div class="dec qtybutton">-</div>
                                                     <div class="inc qtybutton">+</div>
                                                     <div class="dec qtybutton"><i class="fa fa-minus"></i></div>

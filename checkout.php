@@ -31,8 +31,75 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
 <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.qhDXWpKopYk.L.W.O/am=wA/d=0/rs=AN8SPfq5gedF4FIOWZgYyMCNZA5tU966ig/m=el_main_css"></head>
-<body style="overflow: visible;">
-
+    <?php 
+        include("KetNoi.php");
+        session_start(); 
+    ?>
+    <?php
+// Function to calculate total amount of the cart items
+    function calculate_total($cart_items) {
+        $total = 0;
+        foreach ($cart_items as $cart_item) {
+            $total += $cart_item['tong_tien'];
+        }
+        return $total;
+    }
+        $hoten = isset($_POST['hoten']) ? $_POST['hoten'] : '';
+        $diachi = isset($_POST['diachi']) ? $_POST['diachi'] : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        $dienthoai = isset($_POST['dienthoai']) ? $_POST['dienthoai'] : '';
+        $ghichu = isset($_POST['ghichu']) ? $_POST['ghichu'] : '';
+        $err = "";
+        $errEmail = "";
+        $errSDT ="";
+        if(isset($_POST['btnDatHang'])) {
+            if($hoten == '' || $diachi == '' || $email == '' || $dienthoai == '') {
+                $err = 'Vui lòng nhập đầy đủ thông tin';
+            } else {
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errEmail = 'Địa chỉ email không hợp lệ';
+                } elseif (!preg_match('/^\d{11}$/', $dienthoai)) {
+                    $errSDT = 'Số điện thoại phải có 11 chữ số';
+                } else {
+                    $sql_insert_khach_hang = "INSERT INTO khach_hang (Ten_KH, Dia_Chi, Dien_Thoai, Email, Ghi_Chu) 
+                                              VALUES ('$hoten', '$diachi', '$dienthoai', '$email', '$ghichu')";
+                    $con->query($sql_insert_khach_hang);
+                    $ngayHienTai = new DateTime();
+                    $NgayHT = $ngayHienTai->format("Y-m-d");
+                    $ma_khach_hang = $con->lastInsertId();
+                    $tong_tien = calculate_total($_SESSION['cart_items']);
+                    
+                    // Truy vấn INSERT vào bảng hóa đơn với thông tin Mã Khách Hàng và Tổng Tiền
+                    $sql_insert_hoa_don = "INSERT INTO hoa_don (Ma_KH,ngay_dat,tong_tien) 
+                                           VALUES ('$ma_khach_hang','$NgayHT', '$tong_tien')";
+                    
+                    // Thêm hóa đơn vào cơ sở dữ liệu và lấy mã hóa đơn vừa thêm           
+                    $con->query($sql_insert_hoa_don);
+                    $ma_hoa_don = $con->lastInsertId();
+                    $kt = 0;
+                    foreach ($_SESSION['cart_items'] as $cart_item) {
+                        $ma_san_pham = $cart_item['Ma_Hoa'];
+                        $so_luong_san_pham = $cart_item['So_Luong'];
+                        $don_gia_san_pham = $cart_item['Don_Gia'];
+                        
+                        // Thêm chi tiết hóa đơn vào cơ sở dữ liệu
+                        $sql_insert_chi_tiet_hoa_don = "INSERT INTO chi_tiet_hoa_don (Ma_HD, Ma_Hoa, so_luong, don_gia) 
+                                                        VALUES ('$ma_hoa_don', '$ma_san_pham', '$so_luong_san_pham', '$don_gia_san_pham')";
+                        $con->query($sql_insert_chi_tiet_hoa_don);
+                        $kt++;
+                    }
+                    if ($kt>0) {
+                        header("Location: DatThanhCong.php");                               
+                        exit();
+                    } else {
+                        header("Location: DatThatBai.php");                               
+                        exit();
+                    }
+                }
+            }
+        }
+        
+    ?>
     <!-- Header Area Start Here -->
     <?php 
         require "Layout-Chung/header.php";
@@ -57,315 +124,155 @@
     <!-- Breadcrumb Area End Here -->
     <!-- Checkout Area Start Here -->
     <div class="checkout-area mt-no-text">
-        <div class="container custom-container">
-            <div class="row">
-                <div class="col-12 col-custom">
-                    <div class="coupon-accordion">
-                        <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Phản hồi khách hàng? </font></font><span id="showlogin"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nhấn vào đây để đăng nhập</font></font></span></h3>
-                        <div id="checkout-login" class="coupon-content">
-                            <div class="coupon-info">
-                                <p class="coupon-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Quisque gradida turpis ngồi amet nulla posuere lacinia. </font><font style="vertical-align: inherit;">Cras sed est sit amet ipsum luctus.</font></font></p>
-                                <form action="#">
-                                    <p class="form-row-first">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tên người dùng hoặc email </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input type="text">
-                                    </p>
-                                    <p class="form-row-last">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mật khẩu </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input type="password">
-                                    </p>
-                                    <p class="form-row">
-                                        <input type="checkbox" id="remember_me">
-                                        <label for="remember_me"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">nhớ tôi</font></font></label>
-                                    </p>
-                                    <p class="lost-password"><a href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Quên mật khẩu?</font></font></a></p>
-                                </form>
-                            </div>
-                        </div>
-                        <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Có phiếu giảm giá? </font></font><span id="showcoupon"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bấm vào đây để nhập mã của bạn</font></font></span></h3>
-                        <div id="checkout_coupon" class="coupon-checkout-content">
-                            <div class="coupon-info">
-                                <form action="#">
-                                    <p class="checkout-coupon">
-                                        <input placeholder="Mã giảm giá" type="text">
-                                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><input class="coupon-inner_btn" value="Áp dụng phiếu giảm giá" type="submit"></font></font></font></font>
-                                    </p>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-12 col-custom">
-                    <form action="#">
-                        <div class="checkbox-form">
-                            <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Chi tiết thanh toán</font></font></h3>
-                            <div class="row">
-                                <div class="col-md-12 col-custom">
-                                    <div class="country-select clearfix">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Quốc gia</font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <select class="myniceselect nice-select wide rounded-0" style="display: none;">
-                                            <option data-display="Bangladesh"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bangladesh</font></font></option>
-                                            <option value="uk"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">London</font></font></option>
-                                            <option value="rou"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rumani</font></font></option>
-                                            <option value="fr"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">người Pháp</font></font></option>
-                                            <option value="de"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">nước Đức</font></font></option>
-                                            <option value="aus"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Châu Úc</font></font></option>
-                                        </select><div class="nice-select myniceselect wide rounded-0" tabindex="0"><span class="current"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bangladesh</font></font></span><ul class="list"><li data-value="Bangladesh" data-display="Bangladesh" class="option selected"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bangladesh</font></font></li><li data-value="uk" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">London</font></font></li><li data-value="rou" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rumani</font></font></li><li data-value="fr" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">người Pháp</font></font></li><li data-value="de" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">nước Đức</font></font></li><li data-value="aus" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Châu Úc</font></font></li></ul></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tên đầu tiên </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Họ </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tên công ty</font></font></label>
-                                        <input placeholder="" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Địa chỉ </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="Địa chỉ đường phố" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-custom">
-                                    <div class="checkout-form-list">
-                                        <input placeholder="Căn hộ, dãy phòng, căn hộ, v.v. (tùy chọn)" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thị trấn / Thành phố </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tiểu bang / Quận </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mã bưu / Zip </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="" type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Địa chỉ email </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="" type="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-custom">
-                                    <div class="checkout-form-list">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Điện thoại </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-custom">
-                                    <div class="checkout-form-list create-acc">
-                                        <input id="cbox" type="checkbox">
-                                        <label for="cbox"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tạo một tài khoản?</font></font></label>
-                                    </div>
-                                    <div id="cbox-info" class="checkout-form-list create-account">
-                                        <p class="mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tạo một tài khoản bằng cách nhập thông tin dưới đây. </font><font style="vertical-align: inherit;">Nếu bạn là khách hàng cũ, vui lòng đăng nhập ở đầu trang.</font></font></p>
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mật khẩu tài khoản </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                        <input placeholder="mật khẩu" type="password">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="different-address">
-                                <div class="ship-different-title">
-                                    <div>
-                                        <input id="ship-box" type="checkbox">
-                                        <label for="ship-box"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gửi đến một địa chỉ khác?</font></font></label>
-                                    </div>
-                                </div>
-                                <div id="ship-box-info" class="row mt-2">
-                                    <div class="col-md-12 col-custom">
-                                        <div class="myniceselect country-select clearfix">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Quốc gia</font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <select class="myniceselect nice-select wide rounded-0" style="display: none;">
-                                                <option data-display="Bangladesh"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bangladesh</font></font></option>
-                                                <option value="uk"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">London</font></font></option>
-                                                <option value="rou"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rumani</font></font></option>
-                                                <option value="fr"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">người Pháp</font></font></option>
-                                                <option value="de"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">nước Đức</font></font></option>
-                                                <option value="aus"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Châu Úc</font></font></option>
-                                            </select><div class="nice-select myniceselect wide rounded-0" tabindex="0"><span class="current"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bangladesh</font></font></span><ul class="list"><li data-value="Bangladesh" data-display="Bangladesh" class="option selected"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bangladesh</font></font></li><li data-value="uk" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">London</font></font></li><li data-value="rou" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rumani</font></font></li><li data-value="fr" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">người Pháp</font></font></li><li data-value="de" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">nước Đức</font></font></li><li data-value="aus" class="option"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Châu Úc</font></font></li></ul></div>
-                                        </div>
-                                    </div>
+        <div class="container custom-container">  
+            <form action="checkout.php" method="post">
+                <div class="row">
+                    <div class="col-lg-6 col-12 col-custom">     
+                            <div class="checkbox-form">
+                                <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Chi tiết thanh toán</font></font></h3>
+                                <div class="row">                              
                                     <div class="col-md-12 col-custom">
                                         <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tên đầu tiên </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input placeholder="" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Họ </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input placeholder="" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tên công ty</font></font></label>
-                                            <input placeholder="" type="text">
+                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Họ và tên</font></font></label>
+                                            <input placeholder="" type="text" name="hoten" value="<?php echo $hoten ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-custom">
                                         <div class="checkout-form-list">
                                             <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Địa chỉ </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input placeholder="Địa chỉ đường phố" type="text">
+                                            <input placeholder="Địa chỉ đường phố" type="text" name="diachi"  value="<?php echo $diachi ?>">
                                         </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <input placeholder="Căn hộ, dãy phòng, căn hộ, v.v. (tùy chọn)" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thị trấn / Thành phố </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tiểu bang / Quận </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input placeholder="" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mã bưu / Zip </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input placeholder="" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-custom">
+                                    </div>                            
+                                    <div class="col-md-6 col-custom">
                                         <div class="checkout-form-list">
                                             <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Địa chỉ email </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input placeholder="" type="email">
+                                            <input placeholder="" type="email" name="email"  value="<?php echo $email ?>">
+                                            <div class="text-danger mt-3 ">
+                                            <?php echo $errEmail ?>                                   
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-custom">
+                                        <div class="checkout-form-list">
+                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Điện thoại </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
+                                            <br>
+                                            <input type="number" class="input input-group p-2" name="dienthoai"  value="<?php echo $dienthoai ?>">
+                                            <div class="text-danger mt-3 ">
+                                            <?php echo $errSDT ?>                                   
+                                        </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-custom">
-                                        <div class="checkout-form-list">
-                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Điện thoại </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                            <input type="text">
+                                        <div class="checkout-form-list create-acc">
+                                            <input id="cbox" type="checkbox">
+                                            <label for="cbox"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tạo một tài khoản?</font></font></label>
+                                        </div>
+                                        <div id="cbox-info" class="checkout-form-list create-account">
+                                            <p class="mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tạo một tài khoản bằng cách nhập thông tin dưới đây. </font><font style="vertical-align: inherit;">Nếu bạn là khách hàng cũ, vui lòng đăng nhập ở đầu trang.</font></font></p>
+                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mật khẩu tài khoản </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
+                                            <input placeholder="mật khẩu" type="password">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="order-notes mt-3">
-                                    <div class="checkout-form-list checkout-form-list-2">
-                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ghi chú đặt hàng</font></font></label>
-                                        <textarea id="checkout-mess" cols="30" rows="10" placeholder="Ghi chú về đơn hàng của bạn, ví dụ như ghi chú đặc biệt khi giao hàng."></textarea>
+                                <div class="different-address">                              
+                                    <div class="order-notes mt-3">
+                                        <div class="checkout-form-list checkout-form-list-2">
+                                            <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ghi chú đặt hàng</font></font></label>
+                                            <textarea  name="ghichu" id="checkout-mess" cols="30" rows="10" placeholder="Ghi chú về đơn hàng của bạn, ví dụ như ghi chú đặc biệt khi giao hàng."><?php echo $ghichu ?></textarea>
+                                        </div>
+                                        <div class="text-danger mt-3 ">
+                                            <?php echo $err ?>                                   
+                                        </div>
                                     </div>
                                 </div>
+                            </div>            
+                    </div>
+                    <div class="col-lg-6 col-12 col-custom">
+                        <div class="your-order">
+                            <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đơn hàng của bạn</font></font></h3>
+                            <div class="your-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart-product-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm</font></font></th>
+                                            <th class="cart-product-total"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tổng cộng</font></font></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    // Loop through each item in the cart to display its details
+                                    foreach ($_SESSION['cart_items'] as $cart_item) {
+                                    ?>
+                                        <tr class="cart_item">
+                                            <td class="cart-product-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $cart_item['Ten_Hoa']; ?></font></font><strong class="product-quantity"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                        × <?php echo $cart_item['So_Luong']; ?></font></font></strong></td>
+                                            <td class="cart-product-total text-center"><span class="amount"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo $cart_item['tong_tien']; ?></font></font></span></td>
+                                        </tr>              
+                                    <?php } ?>
+                                    </tbody>
+                                    <tfoot>                  
+                                        <tr class="order-total">
+                                            <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tổng số đơn hàng</font></font></th>
+                                            <td class="text-center"><strong><span class="amount"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><?php echo calculate_total($_SESSION['cart_items']); ?></font></font></span></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-6 col-12 col-custom">
-                    <div class="your-order">
-                        <h3><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đơn hàng của bạn</font></font></h3>
-                        <div class="your-order-table table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="cart-product-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sản phẩm</font></font></th>
-                                        <th class="cart-product-total"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tổng cộng</font></font></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="cart_item">
-                                        <td class="cart-product-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tiền đình hồi hộp </font></font><strong class="product-quantity"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                            × 1</font></font></strong></td>
-                                        <td class="cart-product-total text-center"><span class="amount"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">£165,00</font></font></span></td>
-                                    </tr>
-                                    <tr class="cart_item">
-                                        <td class="cart-product-name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tiền đình hồi hộp </font></font><strong class="product-quantity"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                            × 1</font></font></strong></td>
-                                        <td class="cart-product-total text-center"><span class="amount"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">£165,00</font></font></span></td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="cart-subtotal">
-                                        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tổng phụ của giỏ hàng</font></font></th>
-                                        <td class="text-center"><span class="amount"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">£215,00</font></font></span></td>
-                                    </tr>
-                                    <tr class="order-total">
-                                        <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tổng số đơn hàng</font></font></th>
-                                        <td class="text-center"><strong><span class="amount"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">£215,00</font></font></span></strong></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="payment-method">
-                            <div class="payment-accordion">
-                                <div id="accordion">
-                                    <div class="card">
-                                        <div class="card-header" id="#payment-1">
-                                            <h5 class="panel-title mb-3">
-                                                <a href="#" class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                    Chuyển khoản trực tiếp.
-                                                </font></font></a>
-                                            </h5>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-1">
+                                                <h5 class="panel-title mb-3">
+                                                    <a href="#" class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        Chuyển khoản trực tiếp.
+                                                    </font></font></a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. </font><font style="vertical-align: inherit;">Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. </font><font style="vertical-align: inherit;">Đơn đặt hàng của bạn sẽ không được chuyển cho đến khi tiền đã được xóa trong tài khoản của chúng tôi.</font></font></p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
-                                            <div class="card-body mb-2 mt-2">
-                                                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. </font><font style="vertical-align: inherit;">Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. </font><font style="vertical-align: inherit;">Đơn đặt hàng của bạn sẽ không được chuyển cho đến khi tiền đã được xóa trong tài khoản của chúng tôi.</font></font></p>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-2">
+                                                <h5 class="panel-title mb-3">
+                                                    <a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        Thanh toán séc
+                                                    </font></font></a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. </font><font style="vertical-align: inherit;">Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. </font><font style="vertical-align: inherit;">Đơn đặt hàng của bạn sẽ không được chuyển cho đến khi tiền đã được xóa trong tài khoản của chúng tôi.</font></font></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="#payment-3">
+                                                <h5 class="panel-title mb-3">
+                                                    <a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                                        PayPal
+                                                    </font></font></a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                                <div class="card-body mb-2 mt-2">
+                                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. </font><font style="vertical-align: inherit;">Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. </font><font style="vertical-align: inherit;">Đơn đặt hàng của bạn sẽ không được chuyển cho đến khi tiền đã được xóa trong tài khoản của chúng tôi.</font></font></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header" id="#payment-2">
-                                            <h5 class="panel-title mb-3">
-                                                <a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                    Thanh toán séc
-                                                </font></font></a>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
-                                            <div class="card-body mb-2 mt-2">
-                                                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. </font><font style="vertical-align: inherit;">Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. </font><font style="vertical-align: inherit;">Đơn đặt hàng của bạn sẽ không được chuyển cho đến khi tiền đã được xóa trong tài khoản của chúng tôi.</font></font></p>
-                                            </div>
-                                        </div>
+                                    <div class="order-button-payment">
+                                        <button type="submit" name="btnDatHang" class="btn flosun-button secondary-btn black-color rounded-0 w-100"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đặt hàng</font></font></button>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header" id="#payment-3">
-                                            <h5 class="panel-title mb-3">
-                                                <a href="#" class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-                                                    PayPal
-                                                </font></font></a>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                            <div class="card-body mb-2 mt-2">
-                                                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thực hiện thanh toán trực tiếp vào tài khoản ngân hàng của chúng tôi. </font><font style="vertical-align: inherit;">Vui lòng sử dụng ID đơn hàng của bạn làm tài liệu tham khảo thanh toán. </font><font style="vertical-align: inherit;">Đơn đặt hàng của bạn sẽ không được chuyển cho đến khi tiền đã được xóa trong tài khoản của chúng tôi.</font></font></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order-button-payment">
-                                    <button class="btn flosun-button secondary-btn black-color rounded-0 w-100"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đặt hàng</font></font></button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- Checkout Area End Here -->
