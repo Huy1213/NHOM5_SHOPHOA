@@ -30,20 +30,23 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-<link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.qhDXWpKopYk.L.W.O/am=wA/d=0/rs=AN8SPfq5gedF4FIOWZgYyMCNZA5tU966ig/m=el_main_css"></head>
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.qhDXWpKopYk.L.W.O/am=wA/d=0/rs=AN8SPfq5gedF4FIOWZgYyMCNZA5tU966ig/m=el_main_css"></head>
     <?php 
         include("KetNoi.php");
         session_start(); 
     ?>
     <?php
-// Function to calculate total amount of the cart items
-    function calculate_total($cart_items) {
-        $total = 0;
-        foreach ($cart_items as $cart_item) {
-            $total += $cart_item['tong_tien'];
+        
+        /* Hàm tính tổng */
+        function calculate_total($cart_items) {
+            $total = 0;
+            foreach ($cart_items as $cart_item) {
+                $total += $cart_item['tong_tien'];
+            }
+            return $total;
         }
-        return $total;
-    }
+
+        /* Đặt hàng vào cơ sở dữ liệu */
         $hoten = isset($_POST['hoten']) ? $_POST['hoten'] : '';
         $diachi = isset($_POST['diachi']) ? $_POST['diachi'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -61,8 +64,10 @@
                 } elseif (!preg_match('/^\d{11}$/', $dienthoai)) {
                     $errSDT = 'Số điện thoại phải có 11 chữ số';
                 } else {
-                    $sql_insert_khach_hang = "INSERT INTO khach_hang (Ten_KH, Dia_Chi, Dien_Thoai, Email, Ghi_Chu) 
-                                              VALUES ('$hoten', '$diachi', '$dienthoai', '$email', '$ghichu')";
+
+                    // Truy vấn INSERT vào bảng khách hàng với thông tin họ tên, địa chỉ, số điện thoại, email
+                    $sql_insert_khach_hang = "INSERT INTO khach_hang (Ten_KH, Dia_Chi, Dien_Thoai, Email) 
+                                              VALUES ('$hoten', '$diachi', '$dienthoai', '$email')";
                     $con->query($sql_insert_khach_hang);
                     $ngayHienTai = new DateTime();
                     $NgayHT = $ngayHienTai->format("Y-m-d");
@@ -70,13 +75,15 @@
                     $tong_tien = calculate_total($_SESSION['cart_items']);
                     
                     // Truy vấn INSERT vào bảng hóa đơn với thông tin Mã Khách Hàng và Tổng Tiền
-                    $sql_insert_hoa_don = "INSERT INTO hoa_don (Ma_KH,ngay_dat,tong_tien) 
-                                           VALUES ('$ma_khach_hang','$NgayHT', '$tong_tien')";
+                    $sql_insert_hoa_don = "INSERT INTO hoa_don (Ma_KH,ngay_dat,tong_tien, ghi_chu) 
+                                           VALUES ('$ma_khach_hang','$NgayHT', '$tong_tien','$ghichu')";
                     
                     // Thêm hóa đơn vào cơ sở dữ liệu và lấy mã hóa đơn vừa thêm           
                     $con->query($sql_insert_hoa_don);
                     $ma_hoa_don = $con->lastInsertId();
                     $kt = 0;
+
+                    // Truy vấn INSERT vào bảng chi tiết hóa đơn với thông tin Mã Hóa Đơn, Mã Sản Phẩm, Số Lượng, Đơn Giá
                     foreach ($_SESSION['cart_items'] as $cart_item) {
                         $ma_san_pham = $cart_item['Ma_Hoa'];
                         $so_luong_san_pham = $cart_item['So_Luong'];

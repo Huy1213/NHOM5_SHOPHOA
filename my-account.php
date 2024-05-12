@@ -36,6 +36,7 @@
 
     <!-- Header Area Start Here -->
     <?php 
+        session_start();
         require "Layout-Chung/header.php";
     ?>
     <!-- Header Area End Here -->

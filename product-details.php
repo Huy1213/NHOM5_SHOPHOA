@@ -30,6 +30,7 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
     <?php 
+        session_start();
         $MaHoa = "";
         include("KetNoi.php");
         // Kiểm tra xem tham số 'loai' đã được truyền qua URL hay chưa
@@ -117,27 +118,7 @@
                                 
                             </span>
                         </div>
-                            <div class=" single-product-thumb swiper-container gallery-thumbs swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-thumbs">
-                                <div class="swiper-wrapper" id="swiper-wrapper-ce9a3ed8bfc35cbc" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1/6" style="width: 105px; margin-right: 10px;">
-                                        <img src="assets/images/product/small-size/1.jpg" alt="Sản phẩm">
-                                    </div>
-                                    <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2/6" style="width: 105px; margin-right: 10px;">
-                                        <img src="assets/images/product/small-size/2.jpg" alt="Sản phẩm">
-                                    </div>
-                                    <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3/6" style="width: 105px; margin-right: 10px;">
-                                        <img src="assets/images/product/small-size/3.jpg" alt="Sản phẩm">
-                                    </div>
-                                    <div class="swiper-slide swiper-slide-visible" role="group" aria-label="4/6" style="width: 105px; margin-right: 10px;">
-                                        <img src="assets/images/product/small-size/4.jpg" alt="Sản phẩm">
-                                    </div>
-                                    <div class="swiper-slide" role="group" aria-label="5/6" style="width: 105px; margin-right: 10px;">
-                                        <img src="assets/images/product/small-size/5.jpg" alt="Sản phẩm">
-                                    </div>
-                                    <div class="swiper-slide" role="group" aria-label="6/6" style="width: 105px; margin-right: 10px;">
-                                        <img src="assets/images/product/small-size/6.jpg" alt="Sản phẩm">
-                                    </div>
-                                </div>
+                            <div class=" single-product-thumb swiper-container gallery-thumbs swiper-container-initialized swiper-container-horizontal swiper-container-free-mode swiper-container-thumbs">                               
                                 <!-- Add Arrows -->
                                 <div class="swiper-button-next swiper-button-white" tabindex="0" role="button" aria-label="Trang trình bày tiếp theo" aria-controls="swiper-wrapper-98107826f5c9e45c1" aria-disabled="false"><i class="lnr lnr-arrow-right"></i></div>
                                 <div class="swiper-button-prev swiper-button-white swiper-button-disabled" tabindex="-1" role="button" aria-label="Slide trước" aria-controls="swiper-wrapper-98107826f5c9e45c1" aria-disabled="true"><i class="lnr lnr-arrow-left"></i></div>

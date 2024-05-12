@@ -46,7 +46,6 @@
                                     <ul class="dropdown-submenu dropdown-hover">
                                         <li><a href="contact-us.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Liên hệ</font></font></a></li>
                                         <li><a href="my-account.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tài khoản của tôi</font></font></a></li>
-                                        <li><a href="frequently-questions.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Câu hỏi thường gặp</font></font></a></li>
                                         <li><a href="login.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đăng nhập</font></font></a></li>
                                         <li><a href="register.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đăng ký</font></font></a></li>
                                     </ul>
@@ -76,61 +75,7 @@
                                             ?>
                                             </font></font></span>
                                     </a>
-                                    <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.php"><img src="assets/images/cart/1.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hậu quả của việc tra tấn Odio</font></font></a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1× </font></font></span>
-                                                        <span class="cart-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$98,00</font></font></span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.php"><img src="assets/images/cart/2.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Số nguyên eget ague</font></font></a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1× </font></font></span>
-                                                        <span class="cart-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$98,00</font></font></span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="single-cart-item">
-                                            <div class="cart-img">
-                                                <a href="cart.php"><img src="assets/images/cart/3.jpg" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <h5 class="title"><a href="cart.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Eleifend quam</font></font></a></h5>
-                                                <div class="cart-text-btn">
-                                                    <div class="cart-qty">
-                                                        <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1× </font></font></span>
-                                                        <span class="cart-price"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$98,00</font></font></span>
-                                                    </div>
-                                                    <button type="button"><i class="ion-trash-b"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cart-price-total d-flex justify-content-between">
-                                            <h5><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tổng cộng :</font></font></h5>
-                                            <h5><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$166,00</font></font></h5>
-                                        </div>
-                                        <div class="cart-links d-flex justify-content-between">
-                                            <a class="btn product-cart button-icon flosun-button dark-btn" href="cart.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Xem giỏ hàng</font></font></a>
-                                            <a class="btn flosun-button secondary-btn rounded-0" href="checkout.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thủ tục thanh toán</font></font></a>
-                                        </div>
-                                    </div>
+                                   
                                 </li>
                                 <li class="sidemenu-wrap">
                                     <a href="#"><i class="fa fa-search"></i> </a>

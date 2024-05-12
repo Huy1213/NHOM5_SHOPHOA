@@ -33,6 +33,7 @@
         include("KetNoi.php");
         $sql = "select * from san_pham";
         $SP = $con->query($sql);
+        session_start();
     ?>
 
 <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.qhDXWpKopYk.L.W.O/am=wA/d=0/rs=AN8SPfq5gedF4FIOWZgYyMCNZA5tU966ig/m=el_main_css">

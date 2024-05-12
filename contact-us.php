@@ -38,6 +38,7 @@
 
     <!-- Header Area Start Here -->
     <?php 
+        session_start();
         require "Layout-Chung/header.php";
     ?>
     <!-- Header Area End Here -->
@@ -100,7 +101,7 @@
                 <div class="col-md-12 col-custom">
                     <form method="post" action="http://whizthemes.com/mail-php/reza/flosun/mail.php" id="contact-form" accept-charset="UTF-8" class="contact-form">
                         <div class="comment-box mt-5">
-                            <h5 class="text-uppercase"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Liên lạc</font></font></h5>
+                            <h5 class="text-uppercase"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">GÓP Ý VỀ SHOP</font></font></h5>
                             <div class="row mt-3">
                                 <div class="col-md-6 col-custom">
                                     <div class="input-item mb-4">
