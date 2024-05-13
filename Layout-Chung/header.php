@@ -37,19 +37,6 @@
                                         <?php } ?>
                                     </ul>
                                 </li>
-                               
-                                <li>
-                                    <a href="#">
-                                        <span class="menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trang</font></font></span>
-                                        <i class="fa fa-angle-down"></i>
-                                    </a>
-                                    <ul class="dropdown-submenu dropdown-hover">
-                                        <li><a href="contact-us.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Liên hệ</font></font></a></li>
-                                        <li><a href="my-account.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tài khoản của tôi</font></font></a></li>
-                                        <li><a href="login.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đăng nhập</font></font></a></li>
-                                        <li><a href="register.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đăng ký</font></font></a></li>
-                                    </ul>
-                                </li>
                                 <li>
                                     <a href="about-us.php">
                                         <span class="menu-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Về chúng tôi</font></font></span>

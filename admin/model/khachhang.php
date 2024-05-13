@@ -4,19 +4,19 @@ function del_KH($id){
     $sql ="DELETE FROM khach_hang where Ma_KH=".$id;
     $conn->exec($sql);
 }
-function edit_KH($id,$tenKH,$gioitinh,$diachi,$dienthoai,$email)
+function edit_KH($id,$tenKH,$diachi,$dienthoai,$email)
 {
     $conn = ketnoi();
-    $sql = "UPDATE khach_hang set Ten_KH='".$tenKH."',Gioi_Tinh='".$gioitinh."',Dia-Chi='".$diachi."',Dien_Thoai='".$dienthoai."',Email='".$email."' where Ma_KH=".$id;
+    $sql = "UPDATE khach_hang set Ten_KH='".$tenKH."',Dia_Chi='".$diachi."',Dien_Thoai='".$dienthoai."',Email='".$email."' where Ma_KH=".$id;
     
    
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 }
-function insert_KH($tenKH,$gioitinh,$diachi,$dienthoai,$email)
+function insert_KH($tenKH,$diachi,$dienthoai,$email)
 {
     $conn = ketnoi();
-    $sql = "INSERT INTO khach_hang (Ten_KH, Gioi_Tinh, Dia-Chi, Dien_Thoai, Email) values('$tenKH','$gioitinh','$diachi','$dienthoai','$email')";
+    $sql = "INSERT INTO khach_hang (Ten_KH,  Dia_Chi, Dien_Thoai, Email) values('$tenKH','$diachi','$dienthoai','$email')";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 }
@@ -42,7 +42,15 @@ function getall_KH($key, $page, $soluongsp) {
     $kh = $stmt->fetchAll();
     return $kh;
 }
-
+function getall_KH1($page,$soluongsp){
+    $batdau = ($page-1)*$soluongsp;
+    $conn = ketnoi();
+    $stmt = $conn->prepare("SELECT * FROM khach_hang LIMIT ".$batdau.",".$soluongsp);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $kq = $stmt->fetchAll();
+    return $kq;
+}
 function countRowsInTable_KH() {
     $conn = ketnoi();
     $stmt = $conn->prepare("SELECT COUNT(*) AS total_rows FROM khach_hang");

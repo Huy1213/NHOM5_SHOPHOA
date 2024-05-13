@@ -10,7 +10,6 @@
 <table class="table table-light table-striped">
            <th>Mã KH</th>
            <th>Tên KH</th>
-           <th>Giới Tính</th>
            <th>Địa Chỉ</th>
            <th>Điện Thoại</th>
            <th>Email</th>
@@ -26,8 +25,7 @@
         <tr>
             <td><?php echo $KH['Ma_KH'] ?></td>
             <td><?php echo $KH['Ten_KH'] ?></td>
-            <td><?php echo $KH['Gioi_Tinh'] ?></td>
-            <td><?php echo $KH['Dia-Chi'] ?></td>
+            <td><?php echo $KH['Dia_Chi'] ?></td>
             <td><?php echo $KH['Dien_Thoai'] ?></td>
             <td><?php echo $KH['Email'] ?></td>
             <td><a href="index.php?act=edit_KH&id=<?php echo $KQ['Ma_KH'] ?>" class="btn btn-primary">Sửa</a>  <a href="index.php?act=del_KH&id=<?php echo $KQ['Ma_KH'] ?>" class="btn btn-danger">Xóa</a></td>
@@ -48,7 +46,7 @@
                 <a class="page-link">Previous</a>
                 </li>
                 <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                <li class="page-item"><a class="page-link" href="index.php?act=hoa&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                <li class="page-item"><a class="page-link" href="index.php?act=khachhang&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
                 <?php endfor; ?>
                 <li class="page-item">
                 <a class="page-link" href="#">Next</a>
