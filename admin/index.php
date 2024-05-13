@@ -292,8 +292,62 @@ if(isset($_GET['act']))
                                 
                               
                                 include "view/khachhang.php";
-                                break;
-                            
+                                break;   
+                                    case 'insert_KH':
+                    
+                                        if(!isset($_POST['insert_KH']))
+                                        {
+                                            include "view/insert_KH.php";
+                                    
+                                        }
+                                        elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                            // Lấy dữ liệu từ form
+                                            //$id=$_POST['id'];
+                                            $tenkh = $_POST['Ten_KH'];
+                                            $diachi = $_POST['Dia_Chi'];
+                                            $dienthoai = $_POST['Dien_Thoai'];
+                                            $email = $_POST['Email'];
+                                            insert_KH($tenkh,$diachi,$dienthoai,$email);
+                                            if(!isset($_GET['page']))
+                                            {
+                                                $page = 1;
+                                            }
+                                            else
+                                            {
+                                                $page = $_GET['page'];
+                                            } 
+                                            $soluongsp = 5;
+                                            $kh = getall_KH1($page,$soluongsp);
+                                            $total_rows = countRowsInTable_KH();
+                                            $total_pages = ceil($total_rows / $soluongsp);
+                                            include "view/khachhang.php";
+                                      
+                                      
+                                        }
+                                        
+                                        break; 
+
+                                        case 'del_KH':
+                                            if(isset($_GET['id']))
+                                            {
+                                                $id=$_GET['id'];
+                                                del_KH($id);
+                                            }
+                                            if(!isset($_GET['page']))
+                                            {
+                                                $page = 1;
+                                            }
+                                            else
+                                            {
+                                                $page = $_GET['page'];
+                                            } 
+                                            $soluongsp = 5;
+                                            $kh = getall_KH1($page, $soluongsp);
+                                            $total_rows = countRowsInTable();
+                                            $total_pages = ceil($total_rows / $soluongsp);
+                                           
+                                            include "view/khachhang.php";
+                                            break;
         default:
             include "view/home.php";
     }
