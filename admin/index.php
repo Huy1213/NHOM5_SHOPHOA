@@ -348,6 +348,39 @@ if(isset($_GET['act']))
                                            
                                             include "view/khachhang.php";
                                             break;
+                                            case 'edit_KH':
+                                                
+                                                if(isset($_GET['id']))
+                                                    {
+                                                        $id=$_GET['id'];
+                                                        $kq1=getone_KH($id);
+                                                       include "view/edit_KH.php";
+                                                    }
+                                                if(isset($_POST['edit_KH']))
+                                                    {
+                                                        $id=$_POST['Ma_KH'];
+                                                        $tenkh = $_POST['Ten_KH'];
+                                                        $diachi = $_POST['Dia_Chi'];
+                                                        $dienthoai = $_POST['Dien_Thoai'];
+                                                        $email = $_POST['Email'];
+                                                        edit_KH($id,$tenkh,$diachi,$dienthoai,$email);
+                                                        if(!isset($_GET['page']))
+                                                        {
+                                                            $page = 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $page = $_GET['page'];
+                                                        } 
+                                                        $soluongsp = 5;
+                                                        $kh = getall_KH1($page, $soluongsp);
+                                                        $total_rows = countRowsInTable();
+                                                        $total_pages = ceil($total_rows / $soluongsp);
+                                                        include "view/khachhang.php";
+                                                    }
+                                            //     $kq = getall();
+                                            //    include "view/hoa.php";
+                                                break;
         default:
             include "view/home.php";
     }
