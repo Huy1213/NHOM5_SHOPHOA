@@ -74,14 +74,14 @@
                 $mail->Port       = 587;                                    //TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('hung@gmail.com', 'Phan hoi 1');
+                $mail->setFrom('hung@gmail.com', 'Phan hoi');
                 $mail->addAddress('thanhhuy2329@gmail.com', 'Recipient Name');     //Add a recipient
                             //Name is optional
 
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
-                $mail->Subject = 'phanhoi@gmail.com';
-                $mail->Body = 'This is the HTML message body <b>Phản hồi từ Khách hàng ' . $name . '</b>' .
+                $mail->Subject = 'phanhoi';
+                $mail->Body = '<b>Phản hồi từ Khách hàng ' . $name . '</b>' .
                 '<p>Email: ' . $email . '</p>' .
                 '<p>Nội dung: ' . $message . '</p>';
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

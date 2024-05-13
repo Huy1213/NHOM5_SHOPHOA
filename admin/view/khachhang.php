@@ -28,7 +28,9 @@
             <td><?php echo $KH['Dia_Chi'] ?></td>
             <td><?php echo $KH['Dien_Thoai'] ?></td>
             <td><?php echo $KH['Email'] ?></td>
-            <td><a href="index.php?act=edit_KH&id=<?php echo $KQ['Ma_KH'] ?>" class="btn btn-primary">Sửa</a>  <a href="index.php?act=del_KH&id=<?php echo $KQ['Ma_KH'] ?>" class="btn btn-danger">Xóa</a></td>
+            <td><a href="index.php?act=edit_KH&id=<?php echo $KH['Ma_KH'] ?>" class="btn btn-primary">Sửa</a> 
+             <a href="index.php?act=del_KH&id=<?php echo $KH['Ma_KH'] ?>" class="btn btn-danger">Xóa</a>
+            </td>
             
 </td>
         </tr>
