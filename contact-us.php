@@ -41,6 +41,61 @@
         session_start();
         require "Layout-Chung/header.php";
     ?>
+    <?php
+     use PHPMailer\PHPMailer\PHPMailer;
+     use PHPMailer\PHPMailer\Exception;
+     $err = "";
+    if(isset($_POST['btnGui']))
+    {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+        if($name == '' || $email == '' || $message == '')
+        {
+            $err = 'Vui lòng điền đầy đủ thông tin';
+        }
+        else
+        {
+           
+            require 'vendor/PHPMailer/src/Exception.php';
+            require 'vendor/PHPMailer/src/PHPMailer.php';
+            require 'vendor/PHPMailer/src/SMTP.php';
+
+            $mail = new PHPMailer(true);
+
+            try {              
+
+                $mail->isSMTP();                                            //Send using SMTP
+                $mail->Host       = 'smtp.gmail.com';                        //Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                $mail->Username   = 'thanhhuy9b@gmail.com';                 //Your Gmail username
+                $mail->Password   = 'suzcrbgaltqyqfls';                      //Your Gmail app password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;          //Enable TLS encryption, `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port       = 587;                                    //TCP port to connect to
+
+                //Recipients
+                $mail->setFrom('hung@gmail.com', 'Phan hoi 1');
+                $mail->addAddress('thanhhuy2329@gmail.com', 'Recipient Name');     //Add a recipient
+                            //Name is optional
+
+                //Content
+                $mail->isHTML(true);                                  //Set email format to HTML
+                $mail->Subject = 'phanhoi@gmail.com';
+                $mail->Body = 'This is the HTML message body <b>Phản hồi từ Khách hàng ' . $name . '</b>' .
+                '<p>Email: ' . $email . '</p>' .
+                '<p>Nội dung: ' . $message . '</p>';
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+                $mail->send();
+                $err='Gửi thành công';
+            } catch (Exception $e) {
+                $err = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+        }
+
+    }
+    
+?>
     <!-- Header Area End Here -->
     <!-- Breadcrumb Area Start Here -->
     <div class="breadcrumbs-area position-relative">
@@ -99,34 +154,32 @@
             </div>
             <div class="row">
                 <div class="col-md-12 col-custom">
-                    <form method="post" action="http://whizthemes.com/mail-php/reza/flosun/mail.php" id="contact-form" accept-charset="UTF-8" class="contact-form">
+                    <form method="post" action="contact-us.php" class="contact-form">
                         <div class="comment-box mt-5">
                             <h5 class="text-uppercase"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">GÓP Ý VỀ SHOP</font></font></h5>
                             <div class="row mt-3">
                                 <div class="col-md-6 col-custom">
                                     <div class="input-item mb-4">
-                                        <input class="border-0 rounded-0 w-100 input-area name gray-bg" type="text" name="con_name" id="con_name" placeholder="Tên">
+                                        <input class="border-0 rounded-0 w-100 input-area name gray-bg" type="text" name="name" id="con_name" placeholder="Tên">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-custom">
                                     <div class="input-item mb-4">
-                                        <input class="border-0 rounded-0 w-100 input-area email gray-bg" type="email" name="con_email" id="con_email" placeholder="E-mail">
+                                        <input class="border-0 rounded-0 w-100 input-area email gray-bg" type="email" name="email" id="con_email" placeholder="E-mail">
                                     </div>
-                                </div>
+                                </div>                           
                                 <div class="col-12 col-custom">
                                     <div class="input-item mb-4">
-                                        <input class="border-0 rounded-0 w-100 input-area email gray-bg" type="text" name="con_content" id="con_content" placeholder="Chủ thể">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-custom">
-                                    <div class="input-item mb-4">
-                                        <textarea cols="30" rows="5" class="border-0 rounded-0 w-100 custom-textarea input-area gray-bg" name="con_message" id="con_message" placeholder="Tin nhắn"></textarea>
+                                        <textarea cols="30" rows="5" class="border-0 rounded-0 w-100 custom-textarea input-area gray-bg" name="message" id="con_message" placeholder="Tin nhắn"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 col-custom mt-40">
-                                    <button type="submit" id="submit" name="submit" class="btn flosun-button secondary-btn theme-color rounded-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gửi tin nhắn</font></font></button>
+                                    <button type="submit" id="submit" name="btnGui" class="btn flosun-button secondary-btn theme-color rounded-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gửi tin nhắn</font></font></button>
                                 </div>
-                                <p class="col-8 col-custom form-message mb-0"></p>
+                                <p class="text-danger ">
+                                    <?php echo $err ?>
+                                </p>
+                                
                             </div>
                         </div>
                     </form>

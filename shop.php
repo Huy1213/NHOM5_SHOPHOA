@@ -307,49 +307,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget-list widget-mb-1">
-                                <h3 class="widget-title">Danh Mục Thực Đơn</h3>
-                                <!-- Bắt đầu menu tiện ích -->
-                                <nav>
-                                    <ul class="mobile-menu p-0 m-0">
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Bó Hoa Sinh Nhật</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Hoa Thị</a></li>
-                                                <li><a href="#">Aubrieta</a></li>
-                                                <li><a href="#">Giỏ Vàng</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Hoa Tang Lễ</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Cleome</a></li>
-                                                <li><a href="#">Columbine</a></li>
-                                                <li><a href="#">Hoa Lược</a></li>
-                                                <li><a href="#">Cốt Lõi</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Trang Trí Nội Thất</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Lịch</a></li>
-                                                <li><a href="#">Đậu Thầu Dầu</a></li>
-                                                <li><a href="#">Bạc Hà</a></li>
-                                                <li><a href="#">Hẹ</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Đơn Đặt Hàng Tùy Chỉnh</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Hoa Loa Kèn</a></li>
-                                                <li><a href="#">Hoa Hồng</a></li>
-                                                <li><a href="#">Hướng Dương</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </nav>
-                                <!-- Kết thúc menu tiện ích -->
-                            </div>
+                            
                            
                             <div class="widget-list widget-mb-1">
                                 <h3 class="widget-title">Thể Loại</h3>
@@ -361,63 +319,8 @@
                                         <li><a href="#">Sản phẩm mới (6)</a></li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="widget-list widget-mb-2">
-                                <h3 class="widget-title">Màu Sắc</h3>
-                                <div class="sidebar-body">
-                                    <ul class="checkbox-container categories-list">
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck12">
-                                                <label class="custom-control-label" for="customCheck12">Màu Đen
-                                                    (20)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck13">
-                                                <label class="custom-control-label" for="customCheck13">Màu Đỏ
-                                                    (6)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck14">
-                                                <label class="custom-control-label" for="customCheck14">Màu Xanh
-                                                    (8)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck11">
-                                                <label class="custom-control-label" for="customCheck11">Màu Xanh Lá Cây
-                                                    (5)</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck15">
-                                                <label class="custom-control-label" for="customCheck15">Màu Hồng
-                                                    (4)</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="widget-list widget-mb-3">
-                                <h3 class="widget-title">Thẻ</h3>
-                                <div class="sidebar-body">
-                                    <ul class="tags">
-                                        <li><a href="#">Hoa hồng</a></li>
-                                        <li><a href="#">Hướng dương</a></li>
-                                        <li><a href="#">Hoa Tulip</a></li>
-                                        <li><a href="#">Hoa loa kèn</a></li>
-                                        <li><a href="#">Thông minh</a></li>
-                                        <li><a href="#">Hiện đại</a></li>
-                                        <li><a href="#">Quà</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            </div>                      
+                            
                             <div class="widget-list mb-0">
                                 <h3 class="widget-title">Sản Phẩm Mới</h3>
                                 <div class="sidebar-body">

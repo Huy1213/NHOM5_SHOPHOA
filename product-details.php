@@ -156,7 +156,7 @@
                                 </div>                               
                                 <div class="add-to_cart">
                                     <button class="btn product-cart button-icon flosun-button dark-btn" name="add_to_cart" value="add to cart" type="submit"><font style="vertical-align: inherit;" name="add_to_cart"><font style="vertical-align: inherit;">Thêm vào giỏ hàng</font></font></button>
-                                    <a class="btn flosun-button secondary-btn secondary-border rounded-0" href="wishlist.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thêm vào danh sách yêu thích</font></font></a>
+         
                                 </div>
                             </div>
                             <div class="social-share mb-4">
