@@ -28,9 +28,13 @@
             <td><?php echo $KH['Dia_Chi'] ?></td>
             <td><?php echo $KH['Dien_Thoai'] ?></td>
             <td><?php echo $KH['Email'] ?></td>
+<<<<<<< HEAD
             <td><a href="index.php?act=edit_KH&id=<?php echo $KH['Ma_KH'] ?>" class="btn btn-primary">Sửa</a> 
              <a href="index.php?act=del_KH&id=<?php echo $KH['Ma_KH'] ?>" class="btn btn-danger">Xóa</a>
             </td>
+=======
+            <td><a href="index.php?act=edit_KH&id=<?php echo $KH['Ma_KH'] ?>" class="btn btn-primary">Sửa</a>  <a href="index.php?act=del_KH&id=<?php echo $KH['Ma_KH'] ?>" class="btn btn-danger">Xóa</a></td>
+>>>>>>> c41777f28be468fce4195289e98a9d0da6296434
             
 </td>
         </tr>
