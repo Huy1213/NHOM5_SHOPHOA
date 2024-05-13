@@ -159,16 +159,6 @@
                                     <a class="btn flosun-button secondary-btn secondary-border rounded-0" href="wishlist.php"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thêm vào danh sách yêu thích</font></font></a>
                                 </div>
                             </div>
-                            <div class="social-share mb-4">
-                                <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Chia sẻ :</font></font></span>
-                                <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
-                                <a href="#"><i class="fa fa-twitter-square twitter-color"></i></a>
-                                <a href="#"><i class="fa fa-linkedin-square linkedin-color"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-square pinterest-color"></i></a>
-                            </div>
-                            <div class="payment">
-                                <a href="#"><img class="border" src="assets/images/payment/payment-icon.png" alt="Sự chi trả"></a>
-                            </div>
                         </div>
                     </div>
                 </div>              
@@ -182,9 +172,6 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active text-uppercase" id="home-tab" data-bs-toggle="tab" href="#connect-1" role="tab" aria-selected="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sự miêu tả</font></font></a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link text-uppercase" id="profile-tab" data-bs-toggle="tab" href="#connect-2" role="tab" aria-selected="false" tabindex="-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đánh giá</font></font></a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link text-uppercase" id="contact-tab" data-bs-toggle="tab" href="#connect-3" role="tab" aria-selected="false" tabindex="-1"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">chính sách vận chuyển</font></font></a>
@@ -224,50 +211,7 @@
                                         </div>
                                     </div>
                                     <!-- End Single Review -->
-                                </div>
-                                <!-- Start RAting Area -->
-                                <div class="rating_wrap">
-                                    <h5 class="rating-title-1 font-weight-bold mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Thêm một bài đánh giá</font></font></h5>
-                                    <p class="mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Địa chỉ email của bạn sẽ không được công bố. </font><font style="vertical-align: inherit;">Các trường bắt buộc được đánh dấu *</font></font></p>
-                                    <h6 class="rating-title-2 mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Đánh giá của bạn</font></font></h6>
-                                    <div class="rating_list mb-4">
-                                        <div class="review_info">
-                                            <div class="product-rating mb-3">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End RAting Area -->
-                                <div class="comments-area comments-reply-area">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-custom">
-                                            <form action="#" class="comment-form-area">
-                                                <div class="row comment-input">
-                                                    <div class="col-md-6 col-custom comment-form-author mb-3">
-                                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tên </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                                        <input type="text" required="required" name="Name">
-                                                    </div>
-                                                    <div class="col-md-6 col-custom comment-form-emai mb-3">
-                                                        <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Email </font></font><span class="required"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">*</font></font></span></label>
-                                                        <input type="text" required="required" name="email">
-                                                    </div>
-                                                </div>
-                                                <div class="comment-form-comment mb-3">
-                                                    <label><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bình luận</font></font></label>
-                                                    <textarea class="comment-notes" required="required"></textarea>
-                                                </div>
-                                                <div class="comment-form-submit">
-                                                    <button class="btn flosun-button secondary-btn rounded-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nộp</font></font></button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <!-- End Single Content -->
                         </div>
